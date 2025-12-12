@@ -1,15 +1,19 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const itemSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  category: { type: String, required: true },
-  description: { type: String },
-  image: { type: String },
-  owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-  borrowedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  distance: { type: Number, default: 0 },
-  time: { type: Number, default: 1 }
-}, { timestamps: true });
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  name: String,
+  category: String,
+  description: String,
+  image: String,
+  available: { type: Boolean, default: true },
+  createdAt: { type: Date, default: Date.now },
+  location: {
+    type: { type: String, default: 'Point' },
+    coordinates: [Number] // [lng, lat]
+  }
+});
 
-module.exports = mongoose.model("Item", itemSchema);
-  
+itemSchema.index({ location: '2dsphere' }); // enable geo queries
+
+module.exports = mongoose.model('Item', itemSchema);

@@ -52,7 +52,7 @@
     <h1 class="text-3xl font-bold mb-8 text-darkgreen">Dashboard</h1>
 
     <!-- METRIC CARDS -->
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
       <div class="bg-yellowtone p-6 rounded-2xl shadow-lg flex flex-col items-start">
         <div class="flex items-center gap-3">
           <i data-lucide="wallet" class="w-8 h-8"></i>
@@ -67,6 +67,22 @@
           <h2 class="text-lg font-semibold">Carbon Footprint Saved</h2>
         </div>
         <p class="text-4xl font-bold mt-3" id="carbonSaved">0 kg CO₂</p>
+      </div>
+
+      <div class="bg-lightgreen p-6 rounded-2xl shadow-lg flex flex-col items-start">
+        <div class="flex items-center gap-3">
+          <i data-lucide="shield" class="w-8 h-8"></i>
+          <h2 class="text-lg font-semibold">Trust Score</h2>
+        </div>
+        <p class="text-4xl font-bold mt-3" id="trustMeter">0 / 100</p>
+      </div>
+    </section>
+
+    <!-- LEADERBOARD -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold text-darkgreen mb-4">Leaderboard</h2>
+      <div id="leaderboard-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Filled dynamically via JS -->
       </div>
     </section>
 

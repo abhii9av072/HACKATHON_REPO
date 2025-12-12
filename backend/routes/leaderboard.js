@@ -1,9 +1,7 @@
-// backend/routes/leaderboard.js
 const express = require("express");
 const router = express.Router();
-const User = require("../models/User");
+const User = require('../models/User'); // path relative to routes file
 
-// GET /api/leaderboard?limit=10&page=1
 router.get("/", async (req, res) => {
   try {
     const limit = Math.min(50, parseInt(req.query.limit || "10", 10));
@@ -12,20 +10,18 @@ router.get("/", async (req, res) => {
 
     const total = await User.countDocuments();
     const results = await User.find({})
-      .sort({ carbonSaved: -1 }) // highest carbonSaved first
+      .sort({ carbonSaved: -1 })
       .skip(skip)
       .limit(limit)
       .select("name picture carbonSaved trustScore moneySaved")
       .lean();
 
+    // Return as 'leaderboard' to match frontend expectations
     res.json({
-      page,
-      limit,
-      total,
-      results
+      leaderboard: results
     });
   } catch (err) {
-    console.error("leaderboard error:", err);
+    console.error("Leaderboard error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });
