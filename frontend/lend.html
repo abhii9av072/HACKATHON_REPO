@@ -76,50 +76,57 @@
   </main>
 
   <script src="script.js"></script>
-  <script>
-    document.getElementById("lend-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
 
-  const name = document.getElementById("item-name").value;
-  const category = document.getElementById("item-category").value;
-  const description = document.getElementById("item-desc").value;
-  const imageInput = document.getElementById("item-image");
+<script src="script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // call on page load
+  window.loadLentItems();
 
-  if (!imageInput.files[0]) return alert("Please select an image");
+  // form submission
+  document.getElementById("lend-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  // convert image to base64
-  const reader = new FileReader();
-  reader.readAsDataURL(imageInput.files[0]);
-  reader.onload = async () => {
-    const imageData = reader.result;
+    const name = document.getElementById("item-name").value;
+    const category = document.getElementById("item-category").value;
+    const description = document.getElementById("item-desc").value;
+    const imageInput = document.getElementById("item-image");
 
-    // get geolocation
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      const latitude = pos.coords.latitude;
-      const longitude = pos.coords.longitude;
+    if (!imageInput.files[0]) return alert("Please select an image");
 
-      const res = await fetch(`${API_BASE_URL}/api/lend`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ name, category, description, image: imageData, latitude, longitude })
-      });
+    const reader = new FileReader();
+    reader.readAsDataURL(imageInput.files[0]);
+    reader.onload = async () => {
+      const imageData = reader.result;
 
-      const data = await res.json();
-      if (data.success) {
-        alert("Item added successfully!");
-        loadLentItems(); // reload lent items list
-        document.getElementById("lend-form").reset();
-      } else {
-        alert(data.error || "Failed to add item");
-      }
-    }, () => alert("Location is required to lend items."));
-  };
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        const latitude = pos.coords.latitude;
+        const longitude = pos.coords.longitude;
+
+        const res = await fetch(`${API_BASE_URL}/api/lend`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ name, category, description, image: imageData, latitude, longitude })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          alert("Item added successfully!");
+          window.loadLentItems(); // reload items
+          document.getElementById("lend-form").reset();
+        } else {
+          alert(data.error || "Failed to add item");
+        }
+      }, () => alert("Location is required to lend items."));
+    };
+  });
 });
+</script>
 
-  </script>
+
   <script>lucide.createIcons();</script>
 
 </body>
