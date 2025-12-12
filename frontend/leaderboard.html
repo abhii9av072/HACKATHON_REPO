@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard – BorrowNest</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Identity Services (already needed for login) -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <!-- Your script.js -->
+  <script defer src="script.js"></script>
+
+  <style>
+    #tips-popup {
+      animation: slideUp 0.5s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md px-6 py-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-green-700">BorrowNest</h1>
+
+    <div class="flex items-center gap-4">
+      <a href="dashboard.html" class="text-gray-600 hover:text-green-600">Dashboard</a>
+      <a href="borrow.html" class="text-gray-600 hover:text-green-600">Borrow</a>
+      <a href="lend.html" class="text-gray-600 hover:text-green-600">Lend</a>
+      <a href="profile.html" class="text-gray-600 hover:text-green-600">Profile</a>
+
+      <button id="logout-btn" class="px-4 py-2 bg-red-500 text-white rounded-xl">
+        Logout
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="flex-grow p-6">
+
+    <h2 class="text-3xl font-bold text-green-800 mb-6 text-center">
+      Carbon Reduction Leaderboard
+    </h2>
+
+    <div id="leaderboard-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+  </main>
+
+  <!-- 18 Tips Popup -->
+  <div id="tips-popup" class="fixed bottom-4 right-4 bg-white shadow-2xl p-5 rounded-2xl w-80 hidden">
+    <h3 class="text-lg font-semibold mb-2 text-green-700">Useful Tips</h3>
+    <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+      <li>Borrow instead of buying to save money.</li>
+      <li>Lend items you rarely use.</li>
+      <li>Keep items clean before lending.</li>
+      <li>Return items on time.</li>
+      <li>Upload clear images for better visibility.</li>
+      <li>Use search filters to find nearby items.</li>
+      <li>Engage with the community.</li>
+      <li>Build your trust score by lending.</li>
+      <li>Higher trust = faster approvals.</li>
+      <li>Check your dashboard for savings.</li>
+      <li>Update your profile regularly.</li>
+      <li>Report damaged items responsibly.</li>
+      <li>Carbon score increases by reusing items.</li>
+      <li>Lend items safely packaged.</li>
+      <li>Donate unused items.</li>
+      <li>Use categories for better organization.</li>
+      <li>Share the platform with neighbors.</li>
+      <li>Encourage eco-friendly habits.</li>
+    </ul>
+    <button onclick="closeTips()" class="mt-3 w-full bg-green-600 text-white py-2 rounded-xl">
+      Got it
+    </button>
+  </div>
+
+  <script>
+    // Load leaderboard
+    async function loadLeaderboard() {
+      try {
+        const token = localStorage.getItem("borrownest_token");
+        const res = await fetch("http://localhost:5500/api/leaderboard", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        const data = await res.json();
+        const container = document.getElementById("leaderboard-list");
+        container.innerHTML = "";
+
+        data.leaderboard.forEach((user, index) => {
+          const trust = Math.max(10, Math.min(user.trust || 50, 100)); // never below 10
+          const div = document.createElement("div");
+
+          div.className = "bg-white rounded-2xl shadow p-5 hover:shadow-xl transition";
+
+          div.innerHTML = `
+            <div class="flex items-center gap-4">
+              <img src="${user.picture}" class="w-14 h-14 rounded-full shadow" />
+              <div>
+                <h3 class="text-lg font-semibold">${index + 1}. ${user.name}</h3>
+                <p class="text-gray-600">${user.email}</p>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <p class="font-semibold text-green-700">
+                Carbon Reduced: ${user.carbonSaved} kg CO₂
+              </p>
+
+              <div class="mt-3">
+                <p class="text-sm font-medium">Trust Meter</p>
+                <div class="w-full bg-gray-200 rounded-full h-3 mt-1">
+                  <div class="bg-green-600 h-3 rounded-full" style="width: ${trust}%;"></div>
+                </div>
+                <p class="text-xs mt-1">${trust}/100</p>
+              </div>
+            </div>
+          `;
+
+          container.appendChild(div);
+        });
+
+      } catch (err) {
+        console.error("Leaderboard load failed:", err);
+      }
+    }
+
+    // Tips popup (one-time)
+    function showTips() {
+      if (!localStorage.getItem("tips_shown")) {
+        document.getElementById("tips-popup").classList.remove("hidden");
+        localStorage.setItem("tips_shown", "true");
+      }
+    }
+    function closeTips() {
+      document.getElementById("tips-popup").classList.add("hidden");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadLeaderboard();
+      showTips();
+    });
+  </script>
+
+</body>
+</html>
