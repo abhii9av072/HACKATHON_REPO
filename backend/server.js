@@ -1,17 +1,19 @@
-import https from 'https';
-import fs from 'fs';
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const connectDB = require("./config/db");
 
-const options = {
-    key: fs.readFileSync('private-key.pem'),
-    cert: fs.readFileSync('certificate.pem')
-};
+const app = express();
+connectDB();
 
-const server = https.createServer(options, (req, res) => {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello from HTTPS server\n');
-});
+app.use(cors());
+app.use(express.json({ limit: "10mb" }));
 
-const PORT = 3443;
-server.listen(PORT, () => {
-    console.log(`HTTPS server running on https://localhost:${PORT}`);
-});
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/dashboard", require("./routes/dashboard"));
+app.use("/api/borrow", require("./routes/borrow"));
+app.use("/api/lend", require("./routes/lend"));
+app.use("/api/leaderboard", require("./routes/leaderboard"));
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

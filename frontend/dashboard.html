@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BorrowNest | Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            darkgreen: "#213a1a",
+            midgreen: "#385e2b",
+            lightgreen: "#6a8939",
+            limegreen: "#92a740",
+            yellowtone: "#e3dd6f",
+            accentgreen: "#58b368"
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- FLOATING NAVBAR -->
+  <nav
+    class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-white shadow-xl rounded-full px-6 py-3 flex items-center gap-4 z-50">
+    <a href="dashboard.html"
+      class="px-4 py-2 bg-limegreen text-white rounded-full hover:bg-accentgreen transition">Dashboard</a>
+    <a href="borrow.html"
+      class="px-4 py-2 bg-limegreen text-white rounded-full hover:bg-accentgreen transition">Borrow</a>
+    <a href="lend.html"
+      class="px-4 py-2 bg-limegreen text-white rounded-full hover:bg-accentgreen transition">Lend</a>
+    <button id="profile-btn" class="w-10 h-10 rounded-full bg-midgreen text-white flex items-center justify-center">
+      <i data-lucide="user"></i>
+    </button>
+  </nav>
+
+  <!-- PROFILE POPUP -->
+  <div id="profile-popup"
+    class="hidden fixed top-20 right-4 bg-white shadow-lg rounded-2xl p-4 w-48 text-center z-40">
+    <button id="logout-btn" class="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition">Logout</button>
+  </div>
+
+  <main class="pt-28 max-w-6xl mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-8 text-darkgreen">Dashboard</h1>
+
+    <!-- METRIC CARDS -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+      <div class="bg-yellowtone p-6 rounded-2xl shadow-lg flex flex-col items-start">
+        <div class="flex items-center gap-3">
+          <i data-lucide="wallet" class="w-8 h-8"></i>
+          <h2 class="text-lg font-semibold">Money Saved by Borrowing</h2>
+        </div>
+        <p class="text-4xl font-bold mt-3" id="moneySaved">₹0</p>
+      </div>
+
+      <div class="bg-gradient-to-br from-darkgreen to-lightgreen text-white p-6 rounded-2xl shadow-lg flex flex-col items-start">
+        <div class="flex items-center gap-3">
+          <i data-lucide="leaf" class="w-8 h-8"></i>
+          <h2 class="text-lg font-semibold">Carbon Footprint Saved</h2>
+        </div>
+        <p class="text-4xl font-bold mt-3" id="carbonSaved">0 kg CO₂</p>
+      </div>
+    </section>
+
+    <!-- RECENT ACTIVITY -->
+    <section>
+      <h2 class="text-2xl font-bold text-darkgreen mb-4">Recent Activity</h2>
+      <div id="recent-activity" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Filled dynamically via JS -->
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+
+</html>

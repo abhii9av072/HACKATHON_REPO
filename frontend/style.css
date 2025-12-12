@@ -1,0 +1,27 @@
+body { font-family: 'Inter', sans-serif; }
+/* Profile popup animation */
+#profile-popup {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover shadows and smooth transitions for cards */
+section div:hover {
+  transform: translateY(-3px);
+  transition: all 0.3s ease;
+}
+
+/* Suggestion box */
+#suggestion-box {
+  z-index: 50;
+}
+
+/* Floating Navbar shadow enhancement */
+nav {
+  backdrop-filter: blur(8px);
+}
+
+/* Input & select focus */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(146, 167, 64, 0.3);
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BorrowNest | Lend</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- NAVBAR -->
+  <nav
+    class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-white shadow-xl rounded-full px-6 py-3 flex items-center gap-4 z-50">
+    <a href="dashboard.html"
+      class="px-4 py-2 bg-limegreen text-white rounded-full hover:bg-accentgreen transition">Dashboard</a>
+    <a href="borrow.html"
+      class="px-4 py-2 bg-limegreen text-white rounded-full hover:bg-accentgreen transition">Borrow</a>
+    <a href="lend.html"
+      class="px-4 py-2 bg-limegreen text-white rounded-full hover:bg-accentgreen transition">Lend</a>
+    <button id="profile-btn" class="w-10 h-10 rounded-full bg-midgreen text-white flex items-center justify-center">
+      <i data-lucide="user"></i>
+    </button>
+  </nav>
+
+  <!-- PROFILE POPUP -->
+  <div id="profile-popup"
+    class="hidden fixed top-20 right-4 bg-white shadow-lg rounded-2xl p-4 w-48 text-center z-40">
+    <button id="logout-btn" class="px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition">Logout</button>
+  </div>
+
+  <main class="pt-28 max-w-4xl mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-6 text-darkgreen text-center">Lend an Item</h1>
+
+    <form id="lend-form" class="bg-white shadow-lg rounded-2xl p-6 flex flex-col gap-4">
+      <input type="text" id="item-name" placeholder="Item Name" class="p-3 border rounded-full w-full">
+      <select id="item-category" class="p-3 border rounded-full w-full">
+        <option>Furniture</option>
+        <option>Electronics</option>
+        <option>Home Maintenance</option>
+        <option>Gardening</option>
+        <option>Costume</option>
+        <option>Sports & Fitness</option>
+        <option>Party Needs</option>
+        <option>Cleaning Essentials</option>
+      </select>
+      <textarea id="item-desc" placeholder="Item Description" class="p-3 border rounded-xl w-full"></textarea>
+      <input type="file" id="item-image" accept="image/*" class="p-2 border rounded-xl w-full">
+      <button type="submit"
+        class="bg-limegreen text-white py-3 rounded-full hover:bg-accentgreen transition">Add Item</button>
+    </form>
+
+    <h2 class="text-2xl font-bold mt-10 mb-4 text-darkgreen text-center">Your Lent Items</h2>
+    <section id="lent-items-list" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Dynamically filled via JS -->
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+  <script>lucide.createIcons();</script>
+
+</body>
+
+</html>
