@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BorrowNest</title>
+
+    <!-- Tailwind Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="stylesheet" href="../styles/main.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkgreen: "#213a1a",
+                        midgreen: "#385e2b",
+                        lightgreen: "#6a8939",
+                        limegreen: "#92a740",
+                        yellowtone: "#e3dd6f"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- NAVBAR -->
+    <nav class="bg-darkgreen text-white py-4 shadow-lg">
+        <div class="max-w-6xl mx-auto flex items-center justify-between px-4">
+            <h1 class="text-xl font-semibold tracking-wide">BorrowNest</h1>
+
+            <div class="flex items-center gap-6">
+                <a href="#" class="hover:text-limegreen transition">Dashboard</a>
+                <a href="#" class="hover:text-limegreen transition">Items</a>
+                <a href="#" class="hover:text-limegreen transition">Quiz</a>
+                <a href="#" class="hover:text-yellowtone transition">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- SEARCH BAR -->
+    <section class="mt-10">
+        <div class="max-w-3xl mx-auto flex items-center">
+            <input
+                type="text"
+                placeholder="Search items around you..."
+                class="w-full px-5 py-3 rounded-l-xl border border-midgreen focus:ring-2 focus:ring-limegreen outline-none"
+            />
+            <button
+                id="search-btn"
+                class="px-6 py-3 bg-midgreen text-white rounded-r-xl hover:bg-darkgreen transition flex items-center gap-2"
+            >
+                <i data-lucide="search"></i> Search
+            </button>
+        </div>
+    </section>
+
+    <!-- METRIC CARDS -->
+    <section class="mt-12 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 px-4">
+
+        <!-- Money Saved -->
+        <div class="bg-yellowtone p-6 rounded-2xl shadow-lg">
+            <div class="flex items-center gap-3">
+                <i data-lucide="wallet" class="w-8 h-8"></i>
+                <h2 class="text-lg font-semibold">Money Saved by Borrowing</h2>
+            </div>
+            <p class="text-4xl font-bold mt-3">₹3,450</p>
+            <p class="text-sm mt-1">Based on your past borrowed items</p>
+        </div>
+
+        <!-- Carbon Footprint -->
+        <div class="bg-gradient-to-br from-darkgreen to-lightgreen text-white p-6 rounded-2xl shadow-lg">
+            <div class="flex items-center gap-3">
+                <i data-lucide="leaf" class="w-8 h-8"></i>
+                <h2 class="text-lg font-semibold">Carbon Footprint Saved</h2>
+            </div>
+            <p class="text-4xl font-bold mt-3">12.5 kg CO₂</p>
+            <p class="text-sm mt-1 opacity-80">Reduced by borrowing instead of buying</p>
+        </div>
+
+    </section>
+
+    <!-- SUGGESTED ITEMS SECTION -->
+    <section class="mt-10 max-w-6xl mx-auto px-4">
+        <h2 class="text-xl font-semibold mb-4 text-darkgreen">Available Nearby Items</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+            <div class="bg-white rounded-xl shadow p-4 hover:shadow-xl transition">
+                <img src="https://images.unsplash.com/photo-1581091870627-3a6c2f63c5c4?auto=format&fit=crop&w=800&q=60"
+                     class="rounded-lg h-36 w-full object-cover">
+                <h3 class="mt-2 text-lg font-semibold">Electric Drill</h3>
+                <p class="text-sm text-gray-600">Available 0.4 km away</p>
+                <button class="mt-3 w-full py-2 bg-midgreen text-white rounded-xl hover:bg-darkgreen">Borrow</button>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-4 hover:shadow-xl transition">
+                <img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=800&q=60"
+                     class="rounded-lg h-36 w-full object-cover">
+                <h3 class="mt-2 text-lg font-semibold">Vacuum Cleaner</h3>
+                <p class="text-sm text-gray-600">Available 0.8 km away</p>
+                <button class="mt-3 w-full py-2 bg-midgreen text-white rounded-xl hover:bg-darkgreen">Borrow</button>
+            </div>
+
+            <div class="bg-white rounded-xl shadow p-4 hover:shadow-xl transition">
+                <img src="https://images.unsplash.com/photo-1589739904431-340b5b9abe39?auto=format&fit=crop&w=800&q=60"
+                     class="rounded-lg h-36 w-full object-cover">
+                <h3 class="mt-2 text-lg font-semibold">Projector</h3>
+                <p class="text-sm text-gray-600">Available 1.2 km away</p>
+                <button class="mt-3 w-full py-2 bg-midgreen text-white rounded-xl hover:bg-darkgreen">Borrow</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- GOOGLE SIGN IN SECTION -->
+    <section class="mt-16 mb-20 max-w-xl mx-auto text-center px-4">
+        <h2 class="text-xl font-bold text-darkgreen">Sign in with Google</h2>
+        <p class="mt-2 text-gray-600">Access your BorrowNest dashboard and sync your data.</p>
+
+        <button
+            id="google-signin"
+            class="mt-4 flex items-center gap-3 mx-auto border px-6 py-3 rounded-lg shadow bg-white hover:bg-gray-50 transition"
+        >
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-6 h-6">
+            <span class="text-sm font-medium">Continue with Google</span>
+        </button>
+    </section>
+
+    <script src="../.././/javascript/script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
