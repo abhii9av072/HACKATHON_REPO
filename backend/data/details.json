@@ -1,0 +1,15 @@
+{
+    "username": "Abhishek Rastogi",
+    "mobile" : "+91 0123456789",
+    "age": 36,
+    "shareList": [
+        "Product1",
+        "Product2"
+    ],
+    "borrowList": [
+        "Product1",
+        "Product2"
+    ],
+    "address": "Kendriya Vidyalya No.1,Gautam Nagar, Jaipur, Rajasthan",
+    "pincode": 302015
+}
